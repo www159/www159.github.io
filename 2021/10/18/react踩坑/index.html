@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>react踩坑 | Salmon</title><meta name="keywords" content="前端"><meta name="author" content="www159"><meta name="copyright" content="www159"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言一入react深似海。但是回过头来看前端框架看好像都差不多。当然本系列意在吐槽，而且会一直吐槽。在吐槽中学习，在口臭中享受，在喷发中进步。很nice。 webpack为毛create-react-app不支持webpack5？(就像为毛hexo不支持hmr一样)。说些题外话，hexo就是一个庞然大物。  首先hexo-server处理浏览器跳转。而hexo --debug则是这样：当我们sav">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react踩坑">
+<meta property="og:url" content="http://blog.wsalmon.site/2021/10/18/react%E8%B8%A9%E5%9D%91/index.html">
+<meta property="og:site_name" content="Salmon">
+<meta property="og:description" content="前言一入react深似海。但是回过头来看前端框架看好像都差不多。当然本系列意在吐槽，而且会一直吐槽。在吐槽中学习，在口臭中享受，在喷发中进步。很nice。 webpack为毛create-react-app不支持webpack5？(就像为毛hexo不支持hmr一样)。说些题外话，hexo就是一个庞然大物。  首先hexo-server处理浏览器跳转。而hexo --debug则是这样：当我们sav">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img0.baidu.com/it/u=1324259280,3669836565&fm=26&fmt=auto">
+<meta property="article:published_time" content="2021-10-18T14:58:32.001Z">
+<meta property="article:modified_time" content="2021-10-19T03:17:05.430Z">
+<meta property="article:author" content="www159">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img0.baidu.com/it/u=1324259280,3669836565&fm=26&fmt=auto"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://blog.wsalmon.site/2021/10/18/react%E8%B8%A9%E5%9D%91/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'react踩坑',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2021-10-19 11:17:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href=""><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.githubusercontent.com/u/40891547?s=400&amp;v=4" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间线</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fstatic.bookstack.cn%2Fprojects%2Freactjs101-zh-tw%2FCh07%2Fimages%2Fredux-flowchart.png&amp;refer=http%3A%2F%2Fstatic.bookstack.cn&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=jpeg?sec=1637161421&amp;t=225a06a0ad35c34c7cafd81ebfb45515')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Salmon</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间线</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">react踩坑</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-10-18T14:58:32.001Z" title="发表于 2021-10-18 22:58:32">2021-10-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-10-19T03:17:05.430Z" title="更新于 2021-10-19 11:17:05">2021-10-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9D%91%E6%AF%94react/">坑比react</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="react踩坑"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一入react深似海。但是回过头来看前端框架看好像都差不多。当然本系列意在吐槽，而且会一直吐槽。在吐槽中学习，在口臭中享受，在喷发中进步。很nice。</p>
+<h1 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h1><p>为毛create-react-app不支持webpack5？(就像为毛hexo不支持hmr一样)。说些题外话，hexo就是一个庞然大物。</p>
+<ol>
+<li>首先<code>hexo-server</code>处理浏览器跳转。而<code>hexo --debug</code>则是这样：当我们save时，将save这件事log到debug文件中，并显示在终端上。</li>
+<li>因为浏览器的刷新，让server断开连接。</li>
+<li>一旦server断开连接，就会触发hexo自带的<code>watch</code>或者<code>load</code>函数。</li>
+<li>进而触发public目录的更新。</li>
+<li>接着重启server，从而做到及其垃圾的刷新热更新。</li>
+</ol>
+<p>解决方案：用live-server代替这个垃圾server。当然还需要一个命令行，就是当我们按下save时运行hexo.watch()。<br>目前使用带1秒阻塞的live-server监听目录。暂时没有打通的想法。</p>
+<p>隐藏webpack文件的目的：</p>
+<blockquote>
+<p>约定大于配置</p>
+</blockquote>
+<p>但是其做法是隐藏过了头。如果需要修改原有配置（引入父级文件modules），那么付出的学习成本将是<code>webpack+react-app-rewired+...</code>。因此可以考虑出一个暴露配置的脚手架（可能有但是有点老），像vue一样。</p>
+<h1 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h1><p>想要在react中实现防抖难上加难。<br>比如我有一个组件：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> SearchInput: React.FC = <span class="function">(<span class="params">props</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> [state, setState] = useState&lt;SearchInputState&gt;(&#123; <span class="attr">text</span>: <span class="string">&#x27;1&#x27;</span> &#125;)</span><br><span class="line">  <span class="keyword">const</span> dispatch = useDispatch()</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    searchDispatch(<span class="literal">false</span>)</span><br><span class="line">  &#125;, [state])</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">searchDispatch</span>(<span class="params">recover: <span class="built_in">boolean</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(recover) &#123;</span><br><span class="line">      dispatch(&#123;</span><br><span class="line">        <span class="attr">type</span>: IActionType.RECOVER,</span><br><span class="line">        <span class="attr">payload</span>: &#123;&#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      dispatch(&#123;</span><br><span class="line">        <span class="attr">type</span>: IActionType.SEARCH,</span><br><span class="line">        <span class="attr">payload</span>: &#123;</span><br><span class="line">          <span class="attr">text</span>: state.text</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;input</span><br><span class="line">      value=&#123;state.text&#125;</span><br><span class="line">      className=&#123;styles[&quot;search-input&quot;]&#125;</span><br><span class="line">      placeholder=&#123;&quot;&lt;enter&gt;&quot;&#125;</span><br><span class="line">      onChange=&#123;debounce&lt;ChangeEventHandler&lt;HTMLInputElement&gt;&gt;((e) =&gt; &#123;</span><br><span class="line">        setState(&#123;</span><br><span class="line">          //@ts-ignore</span><br><span class="line">          text: e</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;, 500)&#125;</span><br><span class="line">      onKeyDown=&#123;(e) =&gt; &#123;</span><br><span class="line">        if(e.key === &#x27;Enter&#x27;) &#123;</span><br><span class="line">          searchDispatch(false)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;&#125;</span><br><span class="line">      onBlur=&#123;() =&gt; &#123;</span><br><span class="line">        searchDispatch(true)</span><br><span class="line">      &#125;&#125;</span><br><span class="line">      onFocus=&#123;() =&gt; &#123;</span><br><span class="line">        searchDispatch(false)</span><br><span class="line">      &#125;&#125;</span><br><span class="line">    /&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(竟然不支持tsx)<br>onchange需要防抖函数</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">debounce</span>&lt;<span class="title">T</span> <span class="title">extends</span> <span class="title">Function</span> = <span class="title">Function</span>&gt;(<span class="params">fn: T, delay: <span class="built_in">number</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timer: NodeJS.Timeout | <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args: <span class="built_in">any</span>[]</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (timer) &#123;</span><br><span class="line">            <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">        &#125;</span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            fn(...args)</span><br><span class="line">            timer = <span class="literal">null</span>;</span><br><span class="line">        &#125;, delay);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(高亮感人)<br>现在分析一下流程：</p>
+<ol>
+<li>react初始化render，创建onchange下的函数debounce(…)。</li>
+<li>捕捉到onchange。触发debounce函数。</li>
+<li>debounce函数创造计时器。计时器进入回调栈等待同步栈清空。</li>
+<li>此时同步栈的react已经完成所有setState，并且更新虚拟dom节点以及真实dom节点。而定时器中的state保持不变，则真实dom的value保持不变。</li>
+<li>调用回调栈中的setState，此时的value并未发生变化。</li>
+</ol>
+<p>得益于react的同步生命周期，自定义的异步setState不能正常运行。普通的防抖没啥卵用。</p>
+<h2 id="菜鸡"><a href="#菜鸡" class="headerlink" title="菜鸡"></a>菜鸡</h2><p>于是后来发现，想要<strong>防抖只能单向绑定</strong>这就是典型的停机问题悖论。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">www159</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://blog.wsalmon.site/2021/10/18/react%E8%B8%A9%E5%9D%91/">http://blog.wsalmon.site/2021/10/18/react%E8%B8%A9%E5%9D%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.wsalmon.site" target="_blank">Salmon</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a></div><div class="post_share"><div class="social-share" data-image="https://img0.baidu.com/it/u=1324259280,3669836565&amp;fm=26&amp;fmt=auto" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/10/22/ProseMirror%E8%A7%A3%E6%9E%90-%E4%BA%8C-%E8%A1%A8%E6%A0%BC%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"><img class="prev-cover" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3ODYuNSIgaGVpZ2h0PSI4OTkuNiIgdmlld0JveD0iMCAwIDIwOC4xIDIzOC4wIj48cGF0aCBkPSJNMTA0IDJDNDcuNiAyIDIgNDcuNiAyIDEwNHM0NS42IDEwMiAxMDIgMTAyIDEwMi00NS42IDEwMi0xMDJTMTYwLjMgMiAxMDQgMnoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTQ3LjEgOTIuN2MtNi45IDgzLjkgMTAuOCAxMDMuNCAxMC44IDEwMy40cy01NS4xIDUuNS04Mi43LTEzLjRjLTMwLjUtMjAuOS0yNi02Ny41LTI1LjktOTQuNi4xLTI4LjQgMjUuNi00NS44IDQ5LjktNDUuMyAyOS4xLjUgNTAuMiAyMS42IDQ3LjkgNDkuOXoiLz48cGF0aCBkPSJNODIuMSAxMzkuNWMxMi4yIDMzLjMgMjIuNSA0Mi43IDQwLjAgNTUuMiAyNS4zIDE4LjAgMzYuNiAxNy41IDc2LjMgNDEuMC0zOC4zLTM2LjAtODUuNi01MC42LTExNi40LTk2LjN6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTgyLjEgMTM5LjVjMyAxMy4zIDE3LjkgMjkuOSAzMC40IDQxLjYgMjQuOCAyMy4yIDQyIDIyLjQgODYgNTQuNy0xOC4yLTUxLjgtMTguOC02Mi00My41LTEwNi4xLTI0LjctNDQtNjcuNi0yMC4zLTY3LjYtMjAuM1M3OSAxMjYgODIuMSAxMzkuM3oiLz48cGF0aCBkPSJNMTA4LjkgNzZzLTQtMTEuNi0xOC0xMS41Yy0zMCAuMi0yOC44IDUyLjEgMTYuOSA1MiAzOS42LS4xIDM5LjItNDkuNCAxNi4xLTQ5LjYtMTAuMi0uMi0xNSA5LjEtMTUgOS4xeiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0xMDkuNCA5NWMxMC44IDAgMiAxNC45LS42IDIwLjktMS44LTguNC0xMC4yLTIwLjkuNi0yMC45ek05My4xIDgwLjFjLTUuNiAwLTEwLjIgNC41LTEwLjIgMTAuMiAwIDUuNiA0LjUgMTAuMiAxMC4yIDEwLjIgNS42IDAgMTAuMi00LjUgMTAuMi0xMC4yIDAtNS42LTQuNS0xMC4yLTEwLjItMTAuMnptMzAuNS0uMWMtNC44IDAtOC44IDQuNS04LjggMTAuMiAwIDUuNiAzLjkgMTAuMiA4LjggMTAuMiA0LjggMCA4LjgtNC41IDguOC0xMC4yIDAtNS42LTMuOS0xMC4yLTguOC0xMC4yeiIvPjwvc3ZnPg==" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">ProseMirror解析(二) 表格源码解读</div></div></a></div><div class="next-post pull-right"><a href="/2021/10/17/setupVPN%E8%A7%A3%E8%AF%BB/"><img class="next-cover" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.pianshen.com%2Fimages%2F34%2Fc9d0ca36f9c96d6e4145b988e2158c8a.png&amp;refer=http%3A%2F%2Fwww.pianshen.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=jpeg?sec=1637039387&amp;t=d70f40fac063a83b92c4bd2d849f07b9" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">setupVPN解读</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/11/14/%E4%BB%8Ewebpack%E5%88%B0vite/" title="从webpack到vite"><img class="cover" src="https://img1.baidu.com/it/u=4245848156,3157441165&fm=26&fmt=auto" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-14</div><div class="title">从webpack到vite</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://avatars.githubusercontent.com/u/40891547?s=400&amp;v=4" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">www159</div><div class="author-info__description">自强弘毅</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/www159"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/www159" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:2107795244@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">小白一支</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webpack"><span class="toc-number">2.</span> <span class="toc-text">webpack</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%B2%E6%8A%96"><span class="toc-number">3.</span> <span class="toc-text">防抖</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8F%9C%E9%B8%A1"><span class="toc-number">3.1.</span> <span class="toc-text">菜鸡</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/11/14/oj%E7%B3%BB%E5%88%97/" title="oj系列"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="oj系列"/></a><div class="content"><a class="title" href="/2021/11/14/oj%E7%B3%BB%E5%88%97/" title="oj系列">oj系列</a><time datetime="2021-11-14T10:20:13.000Z" title="发表于 2021-11-14 18:20:13">2021-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/14/%E4%BB%8Ewebpack%E5%88%B0vite/" title="从webpack到vite"><img src="https://img1.baidu.com/it/u=4245848156,3157441165&amp;fm=26&amp;fmt=auto" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从webpack到vite"/></a><div class="content"><a class="title" href="/2021/11/14/%E4%BB%8Ewebpack%E5%88%B0vite/" title="从webpack到vite">从webpack到vite</a><time datetime="2021-11-14T08:46:47.000Z" title="发表于 2021-11-14 16:46:47">2021-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/10/Prosemirror%E8%A7%A3%E6%9E%90-%E4%B8%89-%E8%A1%A8%E6%83%85%E6%8F%92%E4%BB%B6/" title="Prosemirror解析-三-表情插件"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3ODYuNSIgaGVpZ2h0PSI4OTkuNiIgdmlld0JveD0iMCAwIDIwOC4xIDIzOC4wIj48cGF0aCBkPSJNMTA0IDJDNDcuNiAyIDIgNDcuNiAyIDEwNHM0NS42IDEwMiAxMDIgMTAyIDEwMi00NS42IDEwMi0xMDJTMTYwLjMgMiAxMDQgMnoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTQ3LjEgOTIuN2MtNi45IDgzLjkgMTAuOCAxMDMuNCAxMC44IDEwMy40cy01NS4xIDUuNS04Mi43LTEzLjRjLTMwLjUtMjAuOS0yNi02Ny41LTI1LjktOTQuNi4xLTI4LjQgMjUuNi00NS44IDQ5LjktNDUuMyAyOS4xLjUgNTAuMiAyMS42IDQ3LjkgNDkuOXoiLz48cGF0aCBkPSJNODIuMSAxMzkuNWMxMi4yIDMzLjMgMjIuNSA0Mi43IDQwLjAgNTUuMiAyNS4zIDE4LjAgMzYuNiAxNy41IDc2LjMgNDEuMC0zOC4zLTM2LjAtODUuNi01MC42LTExNi40LTk2LjN6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTgyLjEgMTM5LjVjMyAxMy4zIDE3LjkgMjkuOSAzMC40IDQxLjYgMjQuOCAyMy4yIDQyIDIyLjQgODYgNTQuNy0xOC4yLTUxLjgtMTguOC02Mi00My41LTEwNi4xLTI0LjctNDQtNjcuNi0yMC4zLTY3LjYtMjAuM1M3OSAxMjYgODIuMSAxMzkuM3oiLz48cGF0aCBkPSJNMTA4LjkgNzZzLTQtMTEuNi0xOC0xMS41Yy0zMCAuMi0yOC44IDUyLjEgMTYuOSA1MiAzOS42LS4xIDM5LjItNDkuNCAxNi4xLTQ5LjYtMTAuMi0uMi0xNSA5LjEtMTUgOS4xeiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0xMDkuNCA5NWMxMC44IDAgMiAxNC45LS42IDIwLjktMS44LTguNC0xMC4yLTIwLjkuNi0yMC45ek05My4xIDgwLjFjLTUuNiAwLTEwLjIgNC41LTEwLjIgMTAuMiAwIDUuNiA0LjUgMTAuMiAxMC4yIDEwLjIgNS42IDAgMTAuMi00LjUgMTAuMi0xMC4yIDAtNS42LTQuNS0xMC4yLTEwLjItMTAuMnptMzAuNS0uMWMtNC44IDAtOC44IDQuNS04LjggMTAuMiAwIDUuNiAzLjkgMTAuMiA4LjggMTAuMiA0LjggMCA4LjgtNC41IDguOC0xMC4yIDAtNS42LTMuOS0xMC4yLTguOC0xMC4yeiIvPjwvc3ZnPg==" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Prosemirror解析-三-表情插件"/></a><div class="content"><a class="title" href="/2021/11/10/Prosemirror%E8%A7%A3%E6%9E%90-%E4%B8%89-%E8%A1%A8%E6%83%85%E6%8F%92%E4%BB%B6/" title="Prosemirror解析-三-表情插件">Prosemirror解析-三-表情插件</a><time datetime="2021-11-10T11:10:17.000Z" title="发表于 2021-11-10 19:10:17">2021-11-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/22/ProseMirror%E8%A7%A3%E6%9E%90-%E4%BA%8C-%E8%A1%A8%E6%A0%BC%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/" title="ProseMirror解析(二) 表格源码解读"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3ODYuNSIgaGVpZ2h0PSI4OTkuNiIgdmlld0JveD0iMCAwIDIwOC4xIDIzOC4wIj48cGF0aCBkPSJNMTA0IDJDNDcuNiAyIDIgNDcuNiAyIDEwNHM0NS42IDEwMiAxMDIgMTAyIDEwMi00NS42IDEwMi0xMDJTMTYwLjMgMiAxMDQgMnoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNMTQ3LjEgOTIuN2MtNi45IDgzLjkgMTAuOCAxMDMuNCAxMC44IDEwMy40cy01NS4xIDUuNS04Mi43LTEzLjRjLTMwLjUtMjAuOS0yNi02Ny41LTI1LjktOTQuNi4xLTI4LjQgMjUuNi00NS44IDQ5LjktNDUuMyAyOS4xLjUgNTAuMiAyMS42IDQ3LjkgNDkuOXoiLz48cGF0aCBkPSJNODIuMSAxMzkuNWMxMi4yIDMzLjMgMjIuNSA0Mi43IDQwLjAgNTUuMiAyNS4zIDE4LjAgMzYuNiAxNy41IDc2LjMgNDEuMC0zOC4zLTM2LjAtODUuNi01MC42LTExNi40LTk2LjN6IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTgyLjEgMTM5LjVjMyAxMy4zIDE3LjkgMjkuOSAzMC40IDQxLjYgMjQuOCAyMy4yIDQyIDIyLjQgODYgNTQuNy0xOC4yLTUxLjgtMTguOC02Mi00My41LTEwNi4xLTI0LjctNDQtNjcuNi0yMC4zLTY3LjYtMjAuM1M3OSAxMjYgODIuMSAxMzkuM3oiLz48cGF0aCBkPSJNMTA4LjkgNzZzLTQtMTEuNi0xOC0xMS41Yy0zMCAuMi0yOC44IDUyLjEgMTYuOSA1MiAzOS42LS4xIDM5LjItNDkuNCAxNi4xLTQ5LjYtMTAuMi0uMi0xNSA5LjEtMTUgOS4xeiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0xMDkuNCA5NWMxMC44IDAgMiAxNC45LS42IDIwLjktMS44LTguNC0xMC4yLTIwLjkuNi0yMC45ek05My4xIDgwLjFjLTUuNiAwLTEwLjIgNC41LTEwLjIgMTAuMiAwIDUuNiA0LjUgMTAuMiAxMC4yIDEwLjIgNS42IDAgMTAuMi00LjUgMTAuMi0xMC4yIDAtNS42LTQuNS0xMC4yLTEwLjItMTAuMnptMzAuNS0uMWMtNC44IDAtOC44IDQuNS04LjggMTAuMiAwIDUuNiAzLjkgMTAuMiA4LjggMTAuMiA0LjggMCA4LjgtNC41IDguOC0xMC4yIDAtNS42LTMuOS0xMC4yLTguOC0xMC4yeiIvPjwvc3ZnPg==" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ProseMirror解析(二) 表格源码解读"/></a><div class="content"><a class="title" href="/2021/10/22/ProseMirror%E8%A7%A3%E6%9E%90-%E4%BA%8C-%E8%A1%A8%E6%A0%BC%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/" title="ProseMirror解析(二) 表格源码解读">ProseMirror解析(二) 表格源码解读</a><time datetime="2021-10-22T13:40:41.000Z" title="发表于 2021-10-22 21:40:41">2021-10-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/18/react%E8%B8%A9%E5%9D%91/" title="react踩坑"><img src="https://img0.baidu.com/it/u=1324259280,3669836565&amp;fm=26&amp;fmt=auto" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="react踩坑"/></a><div class="content"><a class="title" href="/2021/10/18/react%E8%B8%A9%E5%9D%91/" title="react踩坑">react踩坑</a><time datetime="2021-10-18T14:58:32.001Z" title="发表于 2021-10-18 22:58:32">2021-10-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By www159</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
